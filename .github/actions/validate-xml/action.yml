@@ -1,0 +1,29 @@
+name: "Validate XML files"
+description: "Checks that all .xml files in the repo are well-formed"
+runs:
+  using: "composite"
+  steps:
+    - name: Run Python XML validator
+      shell: python3 {0}
+      run: |
+        import os, sys
+        import xml.etree.ElementTree as ET
+
+        errors = False
+        for root, dirs, files in os.walk("."):
+            # Skip .git and .github dirs
+            if root.startswith("./.git") or root.startswith("./.github"):
+                continue
+            for f in files:
+                if f.endswith(".xml"):
+                    path = os.path.join(root, f)
+                    # Skip empty XML files
+                    if os.path.getsize(path) == 0:
+                        continue
+                    try:
+                        ET.parse(path)
+                    except ET.ParseError as e:
+                        print(f"::error file={path}::{e}")
+                        errors = True
+        if errors:
+            sys.exit(1)

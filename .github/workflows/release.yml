@@ -1,0 +1,52 @@
+name: Release on Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from ModInfo.xml
+        id: version
+        uses: ./.github/actions/extract-version
+
+      - name: Create release zip (with CRLF line endings in XML)
+        run: |
+          mkdir -p dist staging
+
+          VERSION="${{ steps.version.outputs.version }}"
+          BASENAME="vpLRS_armor_IzP_LBDR compat patch"
+          ZIP_NAME="$BASENAME-v${VERSION}.zip"
+
+          # Export repo into staging dir (skipping .git and .github)
+          rsync -av --exclude '.*' --exclude 'dist' --exclude 'staging' ./ "staging/${BASENAME}/"
+
+          # Convert all XML files in staging dir to CRLF
+          find "staging/${BASENAME}" -name "*.xml" -type f -print0 | xargs -0 perl -pi -e 's/\n/\r\n/g'
+
+          # Create the zip
+          (cd staging && zip -r "../dist/$ZIP_NAME" .)
+
+      - name: Create tag
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git tag "release-${{ steps.version.outputs.version }}"
+          git push origin "release-${{ steps.version.outputs.version }}"
+
+      - name: Upload release zip
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: release-${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          files: dist/*.zip
+          generate_release_notes: true

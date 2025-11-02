@@ -1,0 +1,33 @@
+name: "Extract version from ModInfo.xml"
+description: "Parses ModInfo.xml and outputs the <Version> value"
+
+outputs:
+  version:
+    description: "Version string extracted from ModInfo.xml"
+    value: ${{ steps.extract.outputs.version }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run Python script
+      id: extract
+      shell: python3 {0}
+      run: |
+        import xml.etree.ElementTree as ET
+        import os, sys
+
+        tree = ET.parse("ModInfo.xml")
+        root = tree.getroot()
+        version_elem = root.find(".//Version")
+
+        version = None
+        if version_elem is not None:
+            version = version_elem.get("value") or version_elem.text
+
+        if not version:
+            print("::error::Could not find <Version> in ModInfo.xml")
+            sys.exit(1)
+
+        print(f"Extracted version: {version}")
+        with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+            f.write(f"version={version}\n")

@@ -1,0 +1,35 @@
+name: Validate
+
+# trigger when pull requests are opened against main,
+# or when commits are pushed to any branch except main
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches-ignore:
+      - main
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate all XML files
+        uses: ./.github/actions/validate-xml
+
+      - name: Extract version from ModInfo.xml
+        id: version
+        uses: ./.github/actions/extract-version
+
+      - name: Ensure version tag doesn't already exist
+        run: |
+          if git fetch --tags && git tag -l | grep -q "release-${{ steps.version.outputs.version }}"; then
+            echo "Tag release-${{ steps.version.outputs.version }} already exists!"
+            exit 1
+          fi
+
