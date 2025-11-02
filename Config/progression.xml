@@ -40,4 +40,18 @@
 	</if>
 	</conditional>
 
+	<conditional>
+	<if cond="mod_loaded('LittleRedSonja_Mumpfy_VanillaReVamp')">
+
+		<!-- Light Armor -->
+		<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorLumberjackHelmet')]/@tags" op="Add">armorTheHitmanHelmet,armorTheHitmanOutfit,armorTheHitmanGloves,armorTheHitmanBoots</csv>
+
+		<!-- Medium Armor -->
+		<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorFarmerHelmet')]/@tags" op="Add">armorTheMotorgangHelmet,armorTheMotorgangOutfit,armorTheMotorgangGloves,armorTheMotorgangBoots,armorTheTactiCoolHelmet,armorTheTactiCoolOutfit,armorTheTactiCoolGloves,armorTheTactiCoolBoots</csv>
+
+		<!-- Heavy Armor -->
+		<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorMinerHelmet')]/@tags" op="Add">armorTheGeekHelmet_White,armorTheGeekOutfit_White,armorTheGeekGloves_White,armorTheGeekBoots_White,armorTheGeekHelmet_Yellow,armorTheGeekOutfit_Yellow,armorTheGeekGloves_Yellow,armorTheGeekBoots_Yellow</csv>
+	</if>
+	</conditional>
+
 </vinylplz>
