@@ -1,0 +1,43 @@
+<vinylplz>
+
+<!-- REFERENCE: IzP LBDR progression.xml perkArmorCrafting:
+<perk name="perkArmorCrafting" min_level = "0" max_level="5" parent="skillMiscCraftingPerks" name_key="perkArmorCraftingName" desc_key="perkArmorCraftingDesc" icon="ui_game_symbol_armor_leather" override_cost="3,3,3,3,3">
+	<effect_group>
+		# Quality/CraftingTier: ALL ARMORS 
+		<passive_effect name="CraftingTier" operation="base_add" level="1,2,3,4,5" value="1,2,3,4,5" tags="armorPrimitiveMaster,armorPrimitiveHelmet,armorPrimitiveOutfit,armorPrimitiveGloves,armorPrimitiveBoots,armorLightMaster,armorMediumMaster,armorHeavyMaster,armorLumberjackHelmet,armorLumberjackOutfit, (...) ,armorRaiderBoots"/>
+
+		# Ranks 1: Light Armor
+		<passive_effect name="RecipeTagUnlocked" operation="base_set" level="1,5" value="1" tags="armorLumberjackHelmet,armorLumberjackOutfit,armorLumberjackGloves,armorLumberjackBoots,armorPreacherHelmet,armorPreacherOutfit, (...) ,armorEnforcerBoots"/>
+
+		# Rank 2: Medium Armor
+		<passive_effect name="RecipeTagUnlocked" operation="base_set" level="2,5" value="1" tags="armorFarmerHelmet,armorFarmerOutfit,armorFarmerGloves,armorFarmerBoots,armorBikerHelmet,armorBikerOutfit,armorBikerGloves, (...) ,armorAssassinBoots"/>
+		
+		# Rank 3: Heavy Armor
+		<passive_effect name="RecipeTagUnlocked" operation="base_set" level="3,5" value="1" tags="armorMinerHelmet,armorMinerOutfit,armorMinerGloves,armorMinerBoots,armorNomadHelmet, (...) ,armorRaiderBoots"/>"/>
+	</effect_group>
+</perk>
+ -->
+
+<!-- To support LBDR, we need to add the LRS armors to the "CraftingTier" passive_effect, to enable crafting higher Quality Armors, 
+     as well as to the relevant "RecipeTagUnlocked" passive_effect for the armor weight.  We can do this by checking for a vanilla armor
+	 that is in each weight class, and adding the LRS armor tags accordingly.
+	 	* Light armor: armorLumberjackHelmet
+	 	* Medium armor: armorFarmerHelmet
+	 	* Heavy armor: armorMinerHelmet
+-->
+
+	<conditional>
+	<if cond="mod_loaded('LittleRedSonja_Mumpfy_DangerGirls')">
+
+		<!-- Light Armor -->
+		<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorLumberjackHelmet')]/@tags" op="Add">armorFemaleClaireHelmet,armorFemaleClaireHelmet_Barbie,armorFemaleClaireOutfit,armorFemaleClaireOutfit_Barbie,armorFemaleClaireGloves,armorFemaleClaireBoots,armorFemaleSnakeInFlowersHelmet_Hood,armorFemaleSnakeInFlowersHelmet_Necklace,armorFemaleSnakeInFlowersOutfit,armorFemaleSnakeInFlowersOutfit_NT,armorFemaleSnakeInFlowersGloves,armorFemaleSnakeInFlowersBoots</csv>
+
+		<!-- Medium Armor -->
+		<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorFarmerHelmet')]/@tags" op="Add">armorFemaleJillHelmet,armorFemaleJillOutfit,armorFemaleJillGloves,armorFemaleJillBoots</csv>
+
+		<!-- Heavy Armor -->
+		<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorMinerHelmet')]/@tags" op="Add">armorFemaleBladeHelmet,armorFemaleBladeOutfit,armorFemaleBladeGloves,armorFemaleBladeBoots</csv>
+	</if>
+	</conditional>
+
+</vinylplz>
