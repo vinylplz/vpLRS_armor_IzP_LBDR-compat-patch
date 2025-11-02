@@ -124,4 +124,18 @@
 	</if>
 	</conditional>
 
+	<conditional>
+	<if cond="mod_loaded('LittleRedSonja_Mumpfy_GoofyTime')">
+
+		<!-- Light Armor -->
+		<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorLumberjackHelmet')]/@tags" op="Add">armorFemaleBadCopHelmet,armorFemaleBadCopOutfit,armorFemaleBadCopGloves,armorFemaleBadCopBoots,armorFemaleSexySheriffHelmet,armorFemaleSexySheriffOutfit,armorFemaleSexySheriffGloves,armorFemaleSexySheriffBoots,armorMaleMachoManHelmet,armorMaleMachoManOutfit,armorMaleMachoManGloves,armorMaleMachoManBoots</csv>
+
+		<!-- Medium Armor -->
+		<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorFarmerHelmet')]/@tags" op="Add">armorFemaleWitchBlueHelmet,armorFemaleWitchBlueOutfit,armorFemaleWitchBlueGloves,armorFemaleWitchBlueBoots,armorFemaleWitchGreenHelmet,armorFemaleWitchGreenOutfit,armorFemaleWitchGreenGloves,armorFemaleWitchGreenBoots,armorFemaleWitchPurpleHelmet,armorFemaleWitchPurpleOutfit,armorFemaleWitchPurpleGloves,armorFemaleWitchPurpleBoots,armorFemaleWitchRedHelmet,armorFemaleWitchRedOutfit,armorFemaleWitchRedGloves,armorFemaleWitchRedBoots,armorFemaleBunnyBlackHelmet,armorFemaleBunnyBlackOutfit,armorFemaleBunnyBlackGloves,armorFemaleBunnyBlackBoots,armorFemaleBunnyGoldHelmet,armorFemaleBunnyGoldOutfit,armorFemaleBunnyGoldGloves,armorFemaleBunnyGoldBoots,armorFemaleBunnyWhiteHelmet,armorFemaleBunnyWhiteOutfit,armorFemaleBunnyWhiteGloves,armorFemaleBunnyWhiteBoots,armorFemaleBunnyRedHelmet,armorFemaleBunnyRedOutfit,armorFemaleBunnyRedGloves,armorFemaleBunnyRedBoots</csv>
+
+		<!-- Heavy Armor (None) -->
+		<!--<csv xpath="//perk[@name='perkArmorCrafting']//passive_effect[contains(@tags,'armorMinerHelmet')]/@tags" op="Add"></csv>-->
+	</if>
+	</conditional>
+
 </vinylplz>
